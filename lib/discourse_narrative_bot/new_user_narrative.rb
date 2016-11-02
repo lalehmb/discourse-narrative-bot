@@ -1,5 +1,6 @@
 require_relative '../dice'
 require_relative '../quote_generator'
+require 'distributed_mutex'
 
 module DiscourseNarrativeBot
   class NewUserNarrative
@@ -15,15 +16,16 @@ module DiscourseNarrativeBot
       },
 
       [:waiting_reply, :reply] => {
-        next_state: :tutorial_topic,
+        next_state: :tutorial_onebox,
+        next_instructions_key: 'onebox.instructions',
         action: :quote_user_reply
       },
 
-      [:tutorial_topic, :reply] => {
-        next_state: :tutorial_onebox,
-        next_instructions_key: 'onebox.instructions',
-        action: :reply_to_topic
-      },
+      # [:tutorial_topic, :reply] => {
+      #   next_state: :tutorial_onebox,
+      #   next_instructions_key: 'onebox.instructions',
+      #   action: :reply_to_topic
+      # },
 
       [:tutorial_onebox, :reply] => {
         next_state: :tutorial_images,
@@ -62,15 +64,15 @@ module DiscourseNarrativeBot
       },
 
       [:tutorial_link, :reply] => {
-        next_state: :tutorial_pm,
-        next_instructions_key: 'pm.instructions',
+        next_state: :end,
+        # next_instructions_key: 'pm.instructions',
         action: :reply_to_link
       },
 
-      [:tutorial_pm, :reply] => {
-        next_state: :end,
-        action: :reply_to_pm
-      }
+      # [:tutorial_pm, :reply] => {
+      #   next_state: :end,
+      #   action: :reply_to_pm
+      # }
     }
 
     RESET_TRIGGER = '/reset_bot'.freeze
@@ -82,40 +84,42 @@ module DiscourseNarrativeBot
     class TransitionError < StandardError; end
 
     def input(input, user, post)
-      @data = DiscourseNarrativeBot::Store.get(user.id) || {}
-      @state = (@data[:state] && @data[:state].to_sym) || :begin
-      @input = input
-      @user = user
-      @post = post
-      opts = {}
+      DistributedMutex.synchronize("new_user_narrative_#{user.id}") do
+        @data = DiscourseNarrativeBot::Store.get(user.id) || {}
+        @state = (@data[:state] && @data[:state].to_sym) || :begin
+        @input = input
+        @user = user
+        @post = post
+        opts = {}
 
-      return if reset_bot?
+        return if reset_bot?
 
-      begin
-        opts = transition
-      rescue DoNotUnderstandError
-        generic_replies
-        return
-      rescue TransitionError
-        mention_replies
-        return
-      end
+        begin
+          opts = transition
+        rescue DoNotUnderstandError
+          generic_replies
+          return
+        rescue TransitionError
+          mention_replies
+          return
+        end
 
-      new_state = opts[:next_state]
-      action = opts[:action]
+        new_state = opts[:next_state]
+        action = opts[:action]
 
-      if next_instructions_key = opts[:next_instructions_key]
-        @next_instructions_key = next_instructions_key
-      end
+        if next_instructions_key = opts[:next_instructions_key]
+          @next_instructions_key = next_instructions_key
+        end
 
-      if new_post = self.send(action)
-        @data[:state] = new_state
-        @data[:last_post_id] = new_post.id
-        store_data
+        if new_post = self.send(action)
+          @data[:state] = new_state
+          @data[:last_post_id] = new_post.id
+          store_data
 
-        if new_state == :end
-          end_reply
-          cancel_timeout_job(user)
+          if new_state == :end
+            end_reply
+            cancel_timeout_job(user)
+          end
         end
       end
     end
@@ -141,37 +145,39 @@ module DiscourseNarrativeBot
         title: SiteSetting.title
       )
 
-      if @input == :init
-        reply_to(raw: raw, topic_id: SiteSetting.discobot_welcome_topic_id)
-      else
-        return unless bot_mentioned?
+      post = reply_to(
+        title: I18n.t(i18n_key("hello.title"), title: SiteSetting.title),
+        raw: raw,
+        target_usernames: @user.username,
+        archetype: Archetype.private_message
+      )
 
-        fake_delay
-        like_post
-
-        reply_to(
-          raw: raw,
-          topic_id: @post.topic.id,
-          reply_to_post_number: @post.post_number
-        )
-      end
+      @data[:topic_id] = post.topic.id
+      post
     end
 
     def quote_user_reply
       post_topic_id = @post.topic.id
-      return unless post_topic_id == SiteSetting.discobot_welcome_topic_id
+      return unless valid_topic?(post_topic_id)
 
       fake_delay
       like_post
 
+      raw = I18n.t(i18n_key('quote_user_reply'),
+        username: @post.user.username,
+        post_id: @post.id,
+        topic_id: post_topic_id,
+        post_raw: @post.raw,
+      )
+
+      raw = <<~RAW
+        #{raw}
+
+        #{I18n.t(i18n_key(@next_instructions_key))}
+      RAW
+
       reply = reply_to(
-        raw: I18n.t(i18n_key('quote_user_reply'),
-          username: @post.user.username,
-          post_id: @post.id,
-          topic_id: post_topic_id,
-          post_raw: @post.raw,
-          category_slug: Category.find(SiteSetting.discobot_category_id).slug
-        ),
+        raw: raw,
         topic_id: post_topic_id,
         reply_to_post_number: @post.post_number
       )
@@ -637,7 +643,7 @@ module DiscourseNarrativeBot
 
     def enqueue_timeout_job(user)
       cancel_timeout_job(user)
-      Jobs.enqueue_in(TIMEOUT_DURATION, :narrative_timeout, user_id: user.id)
+      Jobs.enqueue_in(TIMEOUT_DURATION, :new_user_narrative_timeout, user_id: user.id)
     end
 
     def store_data

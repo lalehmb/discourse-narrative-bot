@@ -13,6 +13,7 @@ en:
 
         If you’d like to interact with me, just mention @discobot anywhere in this #%{category_slug} category. Otherwise I’ll stay out of your way, because I know you're busy.
       hello:
+        title: ":robot: I'm your friendly neighborhood discobot"
         message_1: |-
           Hi @%{username}
 
@@ -45,15 +46,6 @@ en:
         [/quote]
 
         Did you notice how my reply appeared automatically, without refreshing the page? Everything updates here in real time. :clock:
-
-        Next, can you create a new topic in the #%{category_slug} category and mention any subject I like?
-
-        - unicorns
-        - bacon
-        - ninjas
-        - monkeys
-
-        (Please don't judge me. I was programmed this way!)
       unicorn: |-
         Did you know that the unicorn is Scotland’s national animal? :unicorn:
         https://en.wikipedia.org/wiki/Unicorn
@@ -156,7 +148,7 @@ en:
         instructions: |-
           Sometimes you might want to get a person’s attention even if you aren’t replying to them directly. Just mention their name by typing a `@` then completing their name.
 
-          Give it a try – reply to this topic and mention my name `@discobot` in your reply, and I’ll get notified!
+          Give it a try – reply to this private message and mention my name `@discobot` in your reply, and I’ll get notified!
         reply: |-
           _Did someone say my name!?_ :raised_hand: I believe you did! :wave:  Well, here I am! Thanks for mentioning me.  :ok_hand:
         not_found: |-
