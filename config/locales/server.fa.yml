@@ -52,40 +52,40 @@ fa_IR:
           اگه دوست داشته باشی، یه تور کوتاه اینجا می چرخونمت.
         message_3: |-
           از پیوستنت ممنونیم، @%{username}!
-          I’m your friendly neighborhood bot, available to demonstrate how %{title} works.
+          من دوستت هستم و میخوام بهت نشون بدم که %{title} چه جوری کار میکنه.
         message_4: |-
-          Well if it isn’t @%{username}!
-          Great to have you here at %{title}. Without further ado, let's get started right way.
+          خب اگه @%{username} نباشه!
+         خوشحالم که به %{title} سر زدی. بیا سریع شروع کنیم.
         message_5: |-
-          Welcome @%{username}!
-          It’s my job to greet everyone that arrives here at %{title} and offer to help.
+          @%{username} خوش اومدی!
+          وظیفمه که به هر کسی که به %{title} میاد خوش آمد بگم و اگه کاری ازم برمیومد کمک کنم.
       onebox:
         instructions: |-
-          Next, can you share one of these links with me? Reply with **a link on a line by itself**, and it’ll automatically expand to include a nifty summary.
-          To copy a link, tap and hold on mobile, or right click your mouse:
+          میتونی یکی از لینک های زیر رو با من به اشتراک بذاری؟ حواست باشه **لینک رو در یه خط جدا بذاری**، تا خود به خود مختصری ازش نمایش داده بشه.
+          برای کپی کردن لینک، در موبایل بگیر و نگهش دار و یا راست کلیک کن:
           - https://en.wikipedia.org/wiki/Inherently_funny_word
           - https://en.wikipedia.org/wiki/Death_by_coconut
           - https://en.wikipedia.org/wiki/Calculator_spelling
         reply: |-
-          Cool! This will work for most <img src="/images/font-awesome-link.png" width="16" height="16"> links — just remember, it must be on a line _all by itself_, with nothing else in front, or behind.
+          عالی! این برای اکثر لینک ها <img src="/images/font-awesome-link.png" width="16" height="16"> کار میکنه. فقط حواست باشه لینک لازمه در _خط جدا_ باشه، و هیچی جلو یا پشتش نباشه.
         not_found: |-
-          Sorry, I couldn’t find the link in your reply! :cry:
-          Can you try adding the following link, on its own line, in your next reply?
+          ببخشید، نتونستم لینکی در پاسخت پیدا کنم! :cry:
+          میتونی با لینک زیر تلاش کنی، در یه خط جدا در پاسخ بعدیت؟
           - https://en.wikipedia.org/wiki/Exotic_Shorthair
       images:
         instructions: |-
-          Here’s a picture of a unicorn:
+          اینجا تصویر یه اسب تک شاخ هست:
           <img src="/images/unicorn.jpg" width="520" height="381">
-          If you like it (and who wouldn’t!) go ahead and press the like :heart: button below this post to let me know.
-          Can you **reply with a picture?** Any picture will do! Drag and drop, press the upload button, or even copy and paste it in.
+          اگه فکر میکنی بودنش مفیده (کی فکر نمیکنه!) کافیه دکمه ی :heart: رو زیر پست فشار بده تا من خبردار شم.
+          میتونی **با یه عکس پاسخ بدی؟** هر تصویری خوبه! یا بگیرش و بندازش و یا دکمه ی اپلود رو کلیک کن و یا حتی کپیش کن و در ادیتور پیست کن.
         reply: |-
-          Nifty picture – I pressed the like :heart: button to let you know how much I appreciated it :heart_eyes:
+          Nifty picture – دکمه ی مفید :heart: رو زدم که بهت نشون بدم چقد بودن این عکس مفید بود :heart_eyes:
         like_not_found: |-
-          Did you forget to like :heart: my [post](%{url})? :crying_cat_face:
+         فراموش کردی :heart: [پست من](%{url}) به عنوان مفید مطرح کنی؟ :crying_cat_face:
         not_found: |-
-          Looks like you didn’t upload an image so I’ve choosen a picture that I’m _sure_ you will enjoy.
+          به نظر میرسه تو تصویری انتخاب نکردی، پس من یه تصویر گذاشتم که مطمئنم خوشت میاد.
           `https://discourse.org/images/discobot-newuser/dog-walk.gif`
-          Try uploading that one next!
+          دفعه ی بعد این رو آپلود کن!
       formatting:
         instructions: |-
           Can you make some words **bold** or _italic_ in your reply?
@@ -173,35 +173,36 @@ fa_IR:
           Participate for a little while and our new user safety limits will quickly be lifted as we get to know you. :raised_hands: Keep coming back over a period of weeks or months and you could gain [special abilities](https://meta.discourse.org/t/what-do-user-trust-levels-do/4924) to help keep our community safe and friendly for everyone.
           Go ahead and check out [**our latest discussion topics**](/latest). If you’d like to speak with me again, send me a personal message any time :sunglasses:
       certificate:
-        alt: 'Certificate of Achievement'
+        alt: 'گواهی پایان آموزش'
 
     advanced_user_narrative:
-      title: ':arrow_up: Advanced user features'
+      title: ':arrow_up: فیچرهای حرفه ای'
       start_message: |-
-        Hi @%{username}, I’m glad you’re looking to learn more about advanced features!
+        سلام @%{username}ُ شادم که میخوای در مورد فیچر های پیشرفته بدونی! 
       poll:
         instructions: |-
-          Did you know you can add a poll to any reply, like so:
-              What is your favorite fruit?
+         میدونستی میتونی یه نظرسنجی به پاسخت اضافه کنی؟ مثل این:
+         
+         میوه ی مورد علاقه ت چیه؟
               [poll]
-              * Apple
-              * Durian
-              * Bananas
+              * سیب
+              * دوریان
+              * موز
               [/poll]
-          Can you use the :gear: icon in the editor to build a poll?
+          میتونی از آیکون :gear: در ادیتور کمک بگیری و یه نظرسنجی بسازی؟
         not_found: |-
-          Looks like you didn’t include a poll in your reply. Can you try including the following poll in your next reply?
+          به نظر هیچ نظرسنجی در پاسخت نذاشتی. میتونی نظرسنجی زیر رو در پاسخ بعدیت بذاری؟
               [poll]
               * :cat:
               * :dog:
               [/poll]
         reply: |-
-          Hey nice poll! How’d I do in teaching you about polls :smile:
+          هیی چه نظرسنجی قشنگی! من دیگه چه جوری میتونم به تو در مورد نظرسنجی ها بگم :smile:
           [poll]
           * :+1:
           * :-1:
           [/poll]
       end:
         message: |-
-          That’s all I have for you.
-          Bye for now! If you’d like to speak with me again, send me a personal message any time :sunglasses:
+          تمام.
+         فعلا خدافظ! اگه دوست داشتی باز هم با هم گپ بزنیم، کافیه یه پیام خصوصی برام بفرستی :sunglasses:
