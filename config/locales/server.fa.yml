@@ -31,27 +31,27 @@ fa_IR:
           متاسفانه با توجه به اینکه من یه بات ساده هستم، این یکی رو درست متوجه نشدم :frowning:
           می‌تونی دوباره تلاش کنی، or if you’d like to start over at the beginning of the lesson, say `@%{discobot_username} %{reset_trigger}`.
         second_response: |-
-          Aw, sorry. I’m still not getting it. :anguished:
-          It’s not you – it’s me. I blame my programmers! They’re terrible!
-          Perhaps let’s start over? Say `@%{discobot_username} %{reset_trigger}` to start over. In the meantime, I’ll stay out of your way.
+          اوا! ببخشید. هنوز نگرفتم. :anguished:
+          کاری به شما نداره، تقصیر برنامه نویس های منه. خیلی ضعیف کار کردن!
+         بذار اصلا از اول شروع کنیم؟ بگو `@%{discobot_username} %{reset_trigger}`. تا اون موقع مزاحمت نمیشم. 
     new_user_narrative:
 
       hello:
         title: ":robot: Greetings!"
         triggers: |-
-          - unicorns :unicorn:
-          - rockets :rocket:
-          - ninjas :japanese_castle:
-          - monkeys :monkey_face:
-          Don’t be shy! This is a personal message, so nobody can see it except you and me.
+          - تک شاخ :unicorn:
+          - موشک :rocket:
+          - نینجا :japanese_castle:
+          - میمون :monkey_face:
+         خجالتی نباش! این یه پیام شخصیه و کسی غیر از من و تو نمیبینه ش.
         message_1: |-
-          Hi @%{username}
-          Welcome to %{title}! It’s great to meet you. I’d :heart: to show you around, if you have time.
+          سلام @%{username}
+          به %{title} خوش اومدی! از دیدنت خوشحالم. دوست دارم :heart: اطراف رو بهت نشون بدم، اگه وقت داری.
         message_2: |-
-          Hey, it’s good to see you @%{username}!
-          If you’re interested, I can give you a brief tour.
+          هی، از دیدنت خوشحالم @%{username}!
+          اگه دوست داشته باشی، یه تور کوتاه اینجا می چرخونمت.
         message_3: |-
-          Thanks for joining, @%{username}!
+          از پیوستنت ممنونیم، @%{username}!
           I’m your friendly neighborhood bot, available to demonstrate how %{title} works.
         message_4: |-
           Well if it isn’t @%{username}!
